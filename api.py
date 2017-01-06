@@ -20,7 +20,10 @@ def module_path():
     encoding = sys.getfilesystemencoding()
     if we_are_frozen():
         return os.path.dirname(unicode(sys.executable, encoding))
-    return os.path.dirname(unicode(__file__, encoding))
+    elif os.name == 'posix':
+        return os.path.dirname(os.path.abspath(__file__))
+    else:
+        return os.path.dirname(unicode(__file__, encoding))
 
 class BetaFaceAPI(object):
 
